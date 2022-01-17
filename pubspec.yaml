@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   pluto_grid: ^2.9.1
+  provider: ^6.0.2
   win32_registry: ^0.1.2
 
 dev_dependencies:

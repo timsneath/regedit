@@ -32,7 +32,6 @@ class RegistryTreeView extends StatelessWidget {
         ),
       ],
       onItemInvoked: (item) => debugPrint(item.toString()), // (optional)
-      // (optional). Can be TreeViewSelectionMode.single or TreeViewSelectionMode.multiple
       selectionMode: TreeViewSelectionMode.single,
     );
   }

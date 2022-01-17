@@ -1,6 +1,9 @@
+import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:win32_registry/win32_registry.dart';
 
-import 'grid.dart';
+import 'registry_data_view.dart';
+import 'registry_tree_view.dart';
 
 void main() {
   runApp(const RegistryEditor());
@@ -23,9 +26,13 @@ class MainView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(15),
-      child: const RegistryDataView(),
+    return Scaffold(
+      body: Row(children: const [
+        RegistryTreeView(),
+        RegistryDataView(
+            hive: RegistryHive.localMachine,
+            path: r'SOFTWARE\Microsoft\Windows NT\CurrentVersion'),
+      ]),
     );
   }
 }

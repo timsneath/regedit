@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:pluto_grid/pluto_grid.dart';
+import 'package:win32_registry/win32_registry.dart';
 
 class RegistryDataView extends StatefulWidget {
-  const RegistryDataView({Key? key}) : super(key: key);
+  const RegistryDataView({Key? key, required this.hive, this.path = ''})
+      : super(key: key);
+
+  final RegistryHive hive;
+  final String path;
 
   @override
   _RegistryDataViewState createState() => _RegistryDataViewState();

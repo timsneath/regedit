@@ -8,10 +8,7 @@ import 'registry_tree_view.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => RegistryDataModel(),
-      child: const RegistryEditor(),
-    ),
+    const RegistryEditor(),
   );
 }
 
@@ -32,24 +29,31 @@ class MainView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NavigationView(
-      appBar: const NavigationAppBar(title: Text('Registry Editor')),
-      content: ScaffoldPage(
-        header: TextBox(
-            placeholder: Provider.of<RegistryDataModel>(context, listen: false)
-                .fullPath),
-        content: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          const SingleChildScrollView(
-            child: SizedBox(
-              child: RegistryTreeView(),
-              width: 400,
+    return ChangeNotifierProvider(
+      create: (context) => RegistryDataModel(),
+      builder: (context, widget) {
+        return NavigationView(
+          appBar: const NavigationAppBar(title: Text('Registry Editor')),
+          content: ScaffoldPage(
+            header: TextBox(
+                placeholder: Provider.of<RegistryDataModel>(context).fullPath),
+            content: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SingleChildScrollView(
+                  child: SizedBox(
+                    child: RegistryTreeView(),
+                    width: 400,
+                  ),
+                ),
+                Expanded(
+                  child: Material(child: RegistryDataView()),
+                ),
+              ],
             ),
           ),
-          Expanded(
-            child: Material(child: RegistryDataView()),
-          ),
-        ]),
-      ),
+        );
+      },
     );
   }
 }

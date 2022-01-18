@@ -1,7 +1,7 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/foundation.dart';
 
-const double _whiteSpace = 28.0;
+const double _whiteSpace = 10;
 
 class PlaceholderTreeViewItem extends LazilyExpandingTreeViewItem {
   PlaceholderTreeViewItem() : super(content: const ProgressBar());

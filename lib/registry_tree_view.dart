@@ -2,9 +2,9 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:provider/provider.dart';
 import 'package:win32_registry/win32_registry.dart';
 
-import 'custom_tree_view_item.dart';
 import 'model.dart';
 import 'utils.dart';
+import 'widgets/treeview.dart';
 
 class RegistryTreeView extends StatelessWidget {
   const RegistryTreeView({Key? key}) : super(key: key);

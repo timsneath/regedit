@@ -9,6 +9,12 @@ import 'utils.dart';
 class RegistryTreeView extends StatelessWidget {
   const RegistryTreeView({Key? key}) : super(key: key);
 
+  void updateDetailsView(
+      LazilyExpandingTreeViewItem item, BuildContext context) {
+    debugPrint('updating for ${item.tag}');
+    Provider.of<RegistryDataModel>(context, listen: false).updatePath(item.tag);
+  }
+
   void expandChildren(LazilyExpandingTreeViewItem item) {
     if (item.children.first is PlaceholderTreeViewItem) {
       // populate
@@ -38,12 +44,11 @@ class RegistryTreeView extends StatelessWidget {
     return LazilyExpandingTreeView(
       items: [
         LazilyExpandingTreeViewItem(
-          key: const Key(''),
           leading: const Icon(FluentIcons.t_v_monitor),
           content: const Text('Computer'),
           children: [
             LazilyExpandingTreeViewItem(
-              key: const Key('HKEY_CLASSES_ROOT'),
+              tag: 'HKEY_CLASSES_ROOT',
               leading: const Icon(FluentIcons.folder),
               content: const Text('HKEY_CLASSES_ROOT'),
               expanded: false,
@@ -80,9 +85,7 @@ class RegistryTreeView extends StatelessWidget {
           ],
         ),
       ],
-      onItemInvoked: (item) =>
-          Provider.of<RegistryDataModel>(context, listen: false)
-              .updatePath(item.tag),
+      onItemInvoked: (item) => updateDetailsView(item, context),
       onItemExpanded: expandChildren,
       selectionMode: TreeViewSelectionMode.single,
     );

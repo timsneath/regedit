@@ -18,8 +18,10 @@ class RegistryDataView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(1),
-      child: Consumer<RegistryDataModel>(
-        builder: (context, model, child) => PlutoGrid(
+      child: Consumer<RegistryDataModel>(builder: (context, model, child) {
+        debugPrint(model.fullPath);
+        return PlutoGrid(
+          key: Key('Grid_${model.fullPath}'),
           columns: columns,
           rows: [
             for (var row in model.values)
@@ -31,8 +33,8 @@ class RegistryDataView extends StatelessWidget {
                 },
               ),
           ],
-        ),
-      ),
+        );
+      }),
     );
   }
 }

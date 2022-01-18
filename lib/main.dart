@@ -32,26 +32,23 @@ class MainView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // appBar: const NavigationAppBar(title: Text('Registry Editor')),
-
-      body: Column(
-        children: [
-          // TextBox(),
-          Expanded(
-            child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              const SingleChildScrollView(
-                child: SizedBox(
-                  child: RegistryTreeView(),
-                  width: 400,
-                ),
-              ),
-              Expanded(
-                child: RegistryDataView(),
-              ),
-            ]),
+    return NavigationView(
+      appBar: const NavigationAppBar(title: Text('Registry Editor')),
+      content: ScaffoldPage(
+        header: TextBox(
+            placeholder: Provider.of<RegistryDataModel>(context, listen: false)
+                .fullPath),
+        content: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          const SingleChildScrollView(
+            child: SizedBox(
+              child: RegistryTreeView(),
+              width: 400,
+            ),
           ),
-        ],
+          Expanded(
+            child: Material(child: RegistryDataView()),
+          ),
+        ]),
       ),
     );
   }

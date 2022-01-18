@@ -7,13 +7,6 @@ class PlaceholderTreeViewItem extends LazilyExpandingTreeViewItem {
   PlaceholderTreeViewItem() : super(content: const ProgressBar());
 }
 
-/// The item used by [LazilyExpandingTreeView] to render tiles
-///
-/// See also:
-///
-///  * <https://docs.microsoft.com/en-us/windows/apps/design/controls/tree-view>
-///  * [LazilyExpandingTreeView], which render [TreeViewItem]s as tiles
-///  * [Checkbox], used on multiple selection mode
 class LazilyExpandingTreeViewItem with Diagnosticable {
   final Key? key;
 

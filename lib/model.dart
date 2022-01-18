@@ -6,6 +6,7 @@ import 'package:win32_registry/win32_registry.dart';
 import 'utils.dart';
 
 class RegistryDataModel extends ChangeNotifier {
+  String fullPath = '';
   final List<RegistryValue> _values = [];
 
   UnmodifiableListView<RegistryValue> get values =>
@@ -17,11 +18,16 @@ class RegistryDataModel extends ChangeNotifier {
   }
 
   void updatePath(String fullPath) {
+    this.fullPath = fullPath;
     final hive = hiveFromFullPath(fullPath);
     final path = fullPath.split(r'\').skip(1).join(r'\');
 
+    debugPrint('opening $hive \\ $path');
     final key = Registry.openPath(hive, path: path);
-    _values.addAll(key.values);
+    _values
+      ..clear()
+      ..addAll(key.values);
+    key.close();
     notifyListeners();
   }
 }

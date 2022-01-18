@@ -1,37 +1,89 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:provider/provider.dart';
+import 'package:win32_registry/win32_registry.dart';
+
+import 'custom_tree_view_item.dart';
+import 'model.dart';
+import 'utils.dart';
 
 class RegistryTreeView extends StatelessWidget {
   const RegistryTreeView({Key? key}) : super(key: key);
 
+  void expandChildren(LazilyExpandingTreeViewItem item) {
+    if (item.children.first is PlaceholderTreeViewItem) {
+      // populate
+      item.children.clear();
+
+      final hive = hiveFromFullPath(item.tag);
+      final path = item.tag.split(r'\').skip(1).join(r'\');
+      final key = Registry.openPath(hive, path: path);
+      for (final subkey in key.subkeyNames) {
+        item.children.add(
+          LazilyExpandingTreeViewItem(
+            tag: '${item.tag}\\$subkey',
+            leading: const Icon(FluentIcons.folder),
+            content: Text(subkey),
+            expanded: false,
+            children: [PlaceholderTreeViewItem()],
+          ),
+        );
+      }
+    }
+    debugPrint(
+        '${item.tag}: expanded toggling from ${item.expanded} to ${!item.expanded}');
+  }
+
   @override
   Widget build(BuildContext context) {
-    return TreeView(
+    return LazilyExpandingTreeView(
       items: [
-        TreeViewItem(
-          content: const Text('Work Documents'),
+        LazilyExpandingTreeViewItem(
+          key: const Key(''),
+          leading: const Icon(FluentIcons.t_v_monitor),
+          content: const Text('Computer'),
           children: [
-            TreeViewItem(content: const Text('XYZ Functional Spec')),
-            TreeViewItem(content: const Text('Feature Schedule')),
-            TreeViewItem(content: const Text('Overall Project Plan')),
-            TreeViewItem(content: const Text('Feature Resources Allocation')),
-          ],
-        ),
-        TreeViewItem(
-          content: const Text('Personal Documents'),
-          children: [
-            TreeViewItem(
-              content: const Text('Home Remodel'),
-              children: [
-                TreeViewItem(content: const Text('Contractor Contact Info')),
-                TreeViewItem(content: const Text('Paint Color Scheme')),
-                TreeViewItem(content: const Text('Flooring weedgrain type')),
-                TreeViewItem(content: const Text('Kitchen cabinet style')),
-              ],
+            LazilyExpandingTreeViewItem(
+              key: const Key('HKEY_CLASSES_ROOT'),
+              leading: const Icon(FluentIcons.folder),
+              content: const Text('HKEY_CLASSES_ROOT'),
+              expanded: false,
+              children: [PlaceholderTreeViewItem()],
+            ),
+            LazilyExpandingTreeViewItem(
+              tag: 'HKEY_CURRENT_USER',
+              leading: const Icon(FluentIcons.folder),
+              content: const Text('HKEY_CURRENT_USER'),
+              expanded: false,
+              children: [PlaceholderTreeViewItem()],
+            ),
+            LazilyExpandingTreeViewItem(
+              tag: 'HKEY_LOCAL_MACHINE',
+              leading: const Icon(FluentIcons.folder),
+              content: const Text('HKEY_LOCAL_MACHINE'),
+              expanded: false,
+              children: [PlaceholderTreeViewItem()],
+            ),
+            LazilyExpandingTreeViewItem(
+              tag: 'HKEY_USERS',
+              leading: const Icon(FluentIcons.folder),
+              content: const Text('HKEY_USERS'),
+              expanded: false,
+              children: [PlaceholderTreeViewItem()],
+            ),
+            LazilyExpandingTreeViewItem(
+              tag: 'HKEY_CURRENT_CONFIG',
+              leading: const Icon(FluentIcons.folder),
+              content: const Text('HKEY_CURRENT_CONFIG'),
+              expanded: false,
+              children: [PlaceholderTreeViewItem()],
             ),
           ],
         ),
       ],
-      onItemInvoked: (item) => debugPrint(item.toString()), // (optional)
+      onItemInvoked: (item) =>
+          Provider.of<RegistryDataModel>(context, listen: false)
+              .updatePath(item.tag),
+      onItemExpanded: expandChildren,
       selectionMode: TreeViewSelectionMode.single,
     );
   }

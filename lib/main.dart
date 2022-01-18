@@ -40,9 +40,11 @@ class MainView extends StatelessWidget {
           // TextBox(),
           Expanded(
             child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              const SizedBox(
-                child: RegistryTreeView(),
-                width: 400,
+              const SingleChildScrollView(
+                child: SizedBox(
+                  child: RegistryTreeView(),
+                  width: 400,
+                ),
               ),
               Expanded(
                 child: RegistryDataView(),

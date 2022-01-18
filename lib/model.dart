@@ -3,6 +3,8 @@ import 'dart:collection';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:win32_registry/win32_registry.dart';
 
+import 'utils.dart';
+
 class RegistryDataModel extends ChangeNotifier {
   final List<RegistryValue> _values = [];
 
@@ -10,11 +12,14 @@ class RegistryDataModel extends ChangeNotifier {
       UnmodifiableListView(_values);
 
   RegistryDataModel() {
-    updatePath(RegistryHive.localMachine,
-        r'SOFTWARE\Microsoft\Windows NT\CurrentVersion');
+    updatePath(
+        r'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion');
   }
 
-  void updatePath(RegistryHive hive, String path) {
+  void updatePath(String fullPath) {
+    final hive = hiveFromFullPath(fullPath);
+    final path = fullPath.split(r'\').skip(1).join(r'\');
+
     final key = Registry.openPath(hive, path: path);
     _values.addAll(key.values);
     notifyListeners();

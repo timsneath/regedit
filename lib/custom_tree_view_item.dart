@@ -108,7 +108,7 @@ class LazilyExpandingTreeViewItem with Diagnosticable {
   /// If this is the root node, the depth is 0
   int get depth {
     if (parent != null) {
-      int count = 1;
+      var count = 1;
       LazilyExpandingTreeViewItem? currentParent = parent!;
       while (currentParent?.parent != null) {
         count++;
@@ -126,7 +126,7 @@ class LazilyExpandingTreeViewItem with Diagnosticable {
   /// If this is the root parent, [this] is returned
   LazilyExpandingTreeViewItem get lastParent {
     if (parent != null) {
-      LazilyExpandingTreeViewItem currentParent = parent!;
+      var currentParent = parent!;
       while (currentParent.parent != null) {
         if (currentParent.parent != null) currentParent = currentParent.parent!;
       }
@@ -149,9 +149,9 @@ class LazilyExpandingTreeViewItem with Diagnosticable {
 
   /// Updates [selected] based on the [children]s' state
   void updateSelected() {
-    bool hasNull = false;
-    bool hasFalse = false;
-    bool hasTrue = false;
+    var hasNull = false;
+    var hasFalse = false;
+    var hasTrue = false;
 
     for (final child in children.build(assignParent: false)) {
       if (child.selected == null) {
@@ -192,7 +192,7 @@ extension TreeViewItemCollection on List<LazilyExpandingTreeViewItem> {
     bool assignParent = true,
   }) {
     if (isNotEmpty) {
-      final List<LazilyExpandingTreeViewItem> list = [];
+      final list = <LazilyExpandingTreeViewItem>[];
       for (final item in [...this]) {
         list.add(item);
         if (assignParent) item._parent = parent;

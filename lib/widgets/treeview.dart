@@ -308,7 +308,7 @@ class _LazilyExpandingTreeViewState extends State<LazilyExpandingTreeView> {
   Widget build(BuildContext context) {
     assert(debugCheckHasFluentTheme(context));
     return Container(
-      constraints: const BoxConstraints(minHeight: 28.0),
+      constraints: const BoxConstraints(minHeight: 20.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -417,9 +417,9 @@ class _TreeViewItem extends StatelessWidget {
           children: [
             Container(
               height:
-                  selectionMode == TreeViewSelectionMode.multiple ? 28.0 : 26.0,
+                  selectionMode == TreeViewSelectionMode.multiple ? 28.0 : 20.0,
               padding: EdgeInsets.only(
-                left: 20.0 + item.depth * _whiteSpace,
+                left: 10.0 + item.depth * _whiteSpace,
               ),
               decoration: BoxDecoration(
                 color: item.backgroundColor?.resolve(states) ??
@@ -474,7 +474,7 @@ class _TreeViewItem extends StatelessWidget {
                       ),
                     ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 18.0),
+                    padding: const EdgeInsets.only(left: 10.0),
                     child: DefaultTextStyle(
                       style: TextStyle(
                         fontSize: 12.0,

@@ -9,6 +9,8 @@ import 'widgets/treeview.dart';
 class RegistryTreeView extends StatelessWidget {
   const RegistryTreeView({Key? key}) : super(key: key);
 
+  static const folderIcon = Icon(FluentIcons.folder, size: 16);
+
   void updateDetailsView(
       LazilyExpandingTreeViewItem item, BuildContext context) {
     debugPrint('updating for ${item.tag}');
@@ -27,7 +29,7 @@ class RegistryTreeView extends StatelessWidget {
         item.children.add(
           LazilyExpandingTreeViewItem(
             tag: '${item.tag}\\$subkey',
-            leading: const Icon(FluentIcons.folder),
+            leading: folderIcon,
             content: Text(subkey),
             expanded: false,
             children: [PlaceholderTreeViewItem()],
@@ -44,40 +46,40 @@ class RegistryTreeView extends StatelessWidget {
     return LazilyExpandingTreeView(
       items: [
         LazilyExpandingTreeViewItem(
-          leading: const Icon(FluentIcons.t_v_monitor),
+          leading: const Icon(FluentIcons.t_v_monitor, size: 16),
           content: const Text('Computer'),
           children: [
             LazilyExpandingTreeViewItem(
               tag: 'HKEY_CLASSES_ROOT',
-              leading: const Icon(FluentIcons.folder),
+              leading: folderIcon,
               content: const Text('HKEY_CLASSES_ROOT'),
               expanded: false,
               children: [PlaceholderTreeViewItem()],
             ),
             LazilyExpandingTreeViewItem(
               tag: 'HKEY_CURRENT_USER',
-              leading: const Icon(FluentIcons.folder),
+              leading: folderIcon,
               content: const Text('HKEY_CURRENT_USER'),
               expanded: false,
               children: [PlaceholderTreeViewItem()],
             ),
             LazilyExpandingTreeViewItem(
               tag: 'HKEY_LOCAL_MACHINE',
-              leading: const Icon(FluentIcons.folder),
+              leading: folderIcon,
               content: const Text('HKEY_LOCAL_MACHINE'),
               expanded: false,
               children: [PlaceholderTreeViewItem()],
             ),
             LazilyExpandingTreeViewItem(
               tag: 'HKEY_USERS',
-              leading: const Icon(FluentIcons.folder),
+              leading: folderIcon,
               content: const Text('HKEY_USERS'),
               expanded: false,
               children: [PlaceholderTreeViewItem()],
             ),
             LazilyExpandingTreeViewItem(
               tag: 'HKEY_CURRENT_CONFIG',
-              leading: const Icon(FluentIcons.folder),
+              leading: folderIcon,
               content: const Text('HKEY_CURRENT_CONFIG'),
               expanded: false,
               children: [PlaceholderTreeViewItem()],

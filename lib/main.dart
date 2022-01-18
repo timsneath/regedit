@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'model.dart';
 import 'registry_data_view.dart';
 import 'registry_tree_view.dart';
+import 'widgets/splitter.dart';
 
 void main() {
   runApp(
@@ -37,12 +38,17 @@ class MainView extends StatelessWidget {
           content: ScaffoldPage(
             header: TextBox(
                 placeholder: Provider.of<RegistryDataModel>(context).fullPath),
-            content: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            content: Splitter(
+              axis: Axis.horizontal,
+              initialFractions: const [0.3, 0.7],
               children: [
-                const SingleChildScrollView(
+                SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
                   child: SizedBox(
-                    child: RegistryTreeView(),
+                    child: Wrap(
+                      direction: Axis.vertical,
+                      children: const [RegistryTreeView()],
+                    ),
                     width: 400,
                   ),
                 ),

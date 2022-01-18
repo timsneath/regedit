@@ -8,6 +8,7 @@ import 'utils.dart';
 class RegistryDataModel extends ChangeNotifier {
   String fullPath = '';
   final List<RegistryValue> _values = [];
+  String errorText = '';
 
   UnmodifiableListView<RegistryValue> get values =>
       UnmodifiableListView(_values);
@@ -23,11 +24,17 @@ class RegistryDataModel extends ChangeNotifier {
     final path = fullPath.split(r'\').skip(1).join(r'\');
 
     debugPrint('opening $hive \\ $path');
-    final key = Registry.openPath(hive, path: path);
-    _values
-      ..clear()
-      ..addAll(key.values);
-    key.close();
-    notifyListeners();
+    try {
+      final key = Registry.openPath(hive, path: path);
+      errorText = '';
+      _values
+        ..clear()
+        ..addAll(key.values);
+      key.close();
+    } catch (identifier) {
+      errorText = 'Access denied.';
+    } finally {
+      notifyListeners();
+    }
   }
 }

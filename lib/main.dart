@@ -36,28 +36,38 @@ class MainView extends StatelessWidget {
         return NavigationView(
           appBar: const NavigationAppBar(title: Text('Registry Editor')),
           content: ScaffoldPage(
-            header: TextBox(
-                placeholder: Provider.of<RegistryDataModel>(context).fullPath),
-            content: Splitter(
-              axis: Axis.horizontal,
-              initialFractions: const [0.3, 0.7],
-              children: [
-                SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: SizedBox(
-                    child: Wrap(
-                      direction: Axis.vertical,
-                      children: const [RegistryTreeView()],
+              header: TextBox(
+                  placeholder:
+                      Provider.of<RegistryDataModel>(context).fullPath),
+              content: Splitter(
+                axis: Axis.horizontal,
+                initialFractions: const [0.3, 0.7],
+                children: [
+                  SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: SizedBox(
+                      child: Wrap(
+                        direction: Axis.vertical,
+                        children: const [RegistryTreeView()],
+                      ),
+                      width: 400,
                     ),
-                    width: 400,
                   ),
-                ),
-                Expanded(
-                  child: Material(child: RegistryDataView()),
-                ),
-              ],
-            ),
-          ),
+                  Expanded(
+                    child: Material(child: RegistryDataView()),
+                  ),
+                ],
+              ),
+              bottomBar: () {
+                final errorText =
+                    Provider.of<RegistryDataModel>(context).errorText;
+                if (errorText.isNotEmpty) {
+                  return InfoBar(
+                    severity: InfoBarSeverity.error,
+                    title: Text(errorText),
+                  );
+                }
+              }()),
         );
       },
     );
